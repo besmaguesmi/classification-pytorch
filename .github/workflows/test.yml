@@ -27,7 +27,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt 
 
-      # Run CNN Ship Filter Inference
+      # DVC
+      - name: Create credentials.json
+        env:
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
+        run: |
+          echo $GDRIVE_CREDENTIALS_DATA > credentials_1.json
+
+      - name: Modify DVC Remote
+        run: |
+          uv run dvc remote modify --local myremote gdrive_service_account_json_file_path certain-haiku-441918-i3-fa28d632cae0.json
+
+      - name: DVC Pull Data
+        run: |
+          uv run dvc pull -v
+      # Run CNN Inference
       - name: Run tests
         run: |
           mkdir -p /home/runner/work/classification-pytorch/classification-pytorch/plots

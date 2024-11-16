@@ -36,11 +36,11 @@ jobs:
 
       - name: Modify DVC Remote
         run: |
-          uv run dvc remote modify myremote --local drive_service_account_json_file_path credentials.json
+          dvc remote modify myremote --local drive_service_account_json_file_path credentials.json
 
       - name: DVC Pull Data
         run: |
-          uv run dvc pull -v
+          dvc pull -v
       # Run CNN Inference
       - name: Run tests
         run: |

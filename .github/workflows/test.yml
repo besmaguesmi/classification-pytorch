@@ -10,10 +10,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
+      id-token: write
     steps:
       # Checkout the repository code
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v2
 
       # Set up Python environment
       - name: Set up Python
@@ -24,6 +32,7 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: |
+          uv sync
           python -m pip install --upgrade pip
           pip install -r requirements.txt 
 
@@ -36,11 +45,11 @@ jobs:
 
       - name: Modify DVC Remote
         run: |
-          dvc remote modify myremote --local drive_service_account_json_file_path credentials.json
+          uv run dvc remote modify --local myremote drive_service_account_json_file_path credentials.json
 
       - name: DVC Pull Data
         run: |
-          dvc pull -v
+          uv run dvc pull -v
       # Run CNN Inference
       - name: Run tests
         run: |

@@ -54,3 +54,13 @@ jobs:
         run: |
           mkdir -p /home/runner/work/classification-pytorch/classification-pytorch/plots
           python3 main.py --mode test --data_path ./data/test/ --model_path ./models/cnn_resnet18_freeze_backbone_False.pth
+
+      # Train CNN Model with MLflow
+      - name: Train CNN with MLflow
+        env:
+          MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
+          MLFLOW_TRACKING_TOKEN: ${{ secrets.MLFLOW_TRACKING_TOKEN }}
+        run: |
+          mkdir -p /home/runner/work/classification-pytorch/classification-pytorch/plots
+          python3 train.py --data_path ./data/train/ --epochs 50 --learning_rate 0.001 --model_dir ./models --plot_dir ./plots
+

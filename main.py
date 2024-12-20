@@ -14,9 +14,9 @@ from src.config import *
 from train import train_classifier
 from src.test import test_classifier
 from src.load_ckpts import load_checkpoint
+import mlflow
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
 
 def main(args):
     # Define the data transformation
@@ -31,10 +31,14 @@ def main(args):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model.to(device)
 
+    # MLflow URI from environment variables
+    mlflow.set_tracking_uri(os.getenv("SECRET_HOST"))
+
     if args.mode == "train":
         # Load the entire dataset
         dataset = Dataset(root_dir=args.data_path, transform=transform, mode=args.mode)
-        # create dirs
+        
+        # Create directories for saving model and plots if they do not exist
         if not os.path.exists(MODEL_DIR):
             os.makedirs(MODEL_DIR)
         if not os.path.exists(PLOTS_DIR):
@@ -74,23 +78,25 @@ def main(args):
                 Device:          {device}
             ''')
 
-            # Train the model
+            # Train the model for this fold
             train_classifier(model, train_loader, val_loader, criterion, optimizer, MAX_EPOCHS_NUM, MODEL_DIR,
-                             PLOTS_DIR,
-                             device, BACKBONE, FREEZE_BACKBONE)
+                             PLOTS_DIR, device, BACKBONE, FREEZE_BACKBONE)
 
             # Optionally clear GPU cache
             torch.cuda.empty_cache()
 
         logging.info('Training complete.')
 
-    # Create the dataset
-    testset = Dataset(root_dir=args.data_path, transform=transform, mode=args.mode)
-    test_loader = DataLoader(dataset=testset, batch_size=1, shuffle=False)
-    # Load model checkpoint
-    model, _, _ = load_checkpoint(model, args.model_path)
-    test_classifier(model, test_loader, PLOTS_DIR, BACKBONE, FREEZE_BACKBONE, CLASS_NAMES, device)
+    elif args.mode == "test":
+        # Create the dataset for testing
+        testset = Dataset(root_dir=args.data_path, transform=transform, mode=args.mode)
+        test_loader = DataLoader(dataset=testset, batch_size=1, shuffle=False)
 
+        # Load model checkpoint
+        model, _, _ = load_checkpoint(model, args.model_path)
+        
+        # Perform testing
+        test_classifier(model, test_loader, PLOTS_DIR, BACKBONE, FREEZE_BACKBONE, CLASS_NAMES, device)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Classification")

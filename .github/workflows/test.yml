@@ -72,28 +72,6 @@ jobs:
           # Start the MLflow experiment and track parameters
           python3 train.py --data_path ./data/train/ --epochs 50 --learning_rate 0.001 --model_dir ./models --plot_dir ./plots --mlflow
 
-      # Post-training: Log and Register Model in MLflow
-      - name: Log model with MLflow
-        run: |
-          echo "Logging model to MLflow"
-
-          # Assuming the trained model is saved at ./models/my_model.pth
-          python -c "
-import mlflow
-import mlflow.pytorch
-import torch
-
-# Load the trained model (adjust the path to your actual model)
-model = torch.load('./models/my_model.pth', map_location=torch.device('cpu'))
-
-# Log the model to MLflow
-with mlflow.start_run():
-    mlflow.log_param('epochs', 50)  # Example of logging hyperparameters
-    mlflow.log_param('learning_rate', 0.001)
-
-    # Log the PyTorch model
-    mlflow.pytorch.log_model(model, 'model')
-
     # Log the plots or any other artifacts
     mlflow.log_artifact('./plots')  # Log the plot folder for metrics visualizations
           "

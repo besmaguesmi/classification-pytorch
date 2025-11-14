@@ -44,7 +44,7 @@ jobs:
 
       - name: Modify DVC Remote
         run: |
-          uv run dvc remote modify --local gdrive-remote gdrive_service_account_json_file_path project4-442608-5ffc36a5828f.json
+          uv run dvc remote modify --local gdrive_remote gdrive_service_account_json_file_path project4-442608-5ffc36a5828f.json
 
       - name: DVC Pull Data
         run: |

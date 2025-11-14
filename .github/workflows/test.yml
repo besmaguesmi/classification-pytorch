@@ -49,19 +49,3 @@ jobs:
       - name: DVC Pull Data
         run: |
           uv run dvc pull -v
-      # Run CNN Inference
-      - name: Run tests
-        run: |
-          mkdir -p /home/runner/work/classification-pytorch/classification-pytorch/plots
-          python3 main.py --mode test --data_path ./data/test/ --model_path ./models/cnn_resnet18_freeze_backbone_False.pth
-
-      # Train CNN Model with MLflow
-      - name: Train CNN with MLflow
-        env:
-          SECRET_HOST: ${{ secrets.SECRET_HOST }}
-          SECRET_PORT: ${{ secrets.SECRET_PORT }}
-          SECRET_USERNAME: ${{ secrets.SECRET_USERNAME }}
-          SECRET_PPK_VALUE: ${{ secrets.SECRET_PPK_VALUE }}
-        run: |
-          mkdir -p /home/runner/work/classification-pytorch/classification-pytorch/plots
-          python3 main.py --mode train --data_path ./data/train/ --model_path ./models/

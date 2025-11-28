@@ -18,6 +18,7 @@ import mlflow
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+
 def main(args):
     # Define the data transformation
     transform = transforms.Compose([
@@ -37,7 +38,7 @@ def main(args):
     if args.mode == "train":
         # Load the entire dataset
         dataset = Dataset(root_dir=args.data_path, transform=transform, mode=args.mode)
-        
+
         # Create directories for saving model and plots if they do not exist
         if not os.path.exists(MODEL_DIR):
             os.makedirs(MODEL_DIR)
@@ -88,15 +89,19 @@ def main(args):
         logging.info('Training complete.')
 
     elif args.mode == "test":
+        if not os.path.exists(PLOTS_DIR):
+            os.makedirs(PLOTS_DIR)
+
         # Create the dataset for testing
         testset = Dataset(root_dir=args.data_path, transform=transform, mode=args.mode)
         test_loader = DataLoader(dataset=testset, batch_size=1, shuffle=False)
 
         # Load model checkpoint
         model, _, _ = load_checkpoint(model, args.model_path)
-        
+
         # Perform testing
         test_classifier(model, test_loader, PLOTS_DIR, BACKBONE, FREEZE_BACKBONE, CLASS_NAMES, device)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Classification")

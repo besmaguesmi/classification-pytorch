@@ -53,8 +53,10 @@ def test_classifier(model, test_loader, plot_dir, backbone, freeze_backbone, cla
         torch.cuda.reset_max_memory_allocated(device)
         initial_memory = torch.cuda.memory_allocated(device)
 
+    logging.info("Running inference on test dataset...")
+
     with torch.no_grad():
-        for images, labels in test_loader:
+        for batch_idx, (images, labels) in enumerate(test_loader):
             images = images.to(device)
             labels = labels.to(device).long()
 
@@ -77,6 +79,10 @@ def test_classifier(model, test_loader, plot_dir, backbone, freeze_backbone, cla
             true_labels.extend(labels.cpu().numpy())
             predictions.extend(preds.cpu().numpy())
             probabilities.extend(probs.cpu().numpy())
+
+            # Progress logging every 100 batches
+            if (batch_idx + 1) % 100 == 0:
+                logging.info(f"Processed {batch_idx + 1}/{len(test_loader)} batches...")
 
     # Calculate metrics
     accuracy = correct_preds / total_samples

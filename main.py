@@ -24,9 +24,21 @@ logging.basicConfig(
 )
 
 
-def test_with_mlflow(model, test_loader, plots_dir, backbone, freeze_backbone, class_names, device, model_path):
-    """Test function with MLflow logging"""
-    setup_mlflow()
+def test_with_mlflow(model, test_loader, plots_dir, backbone, freeze_backbone, class_names, device, model_path, use_mlflow=True):
+    """Test function with optional MLflow logging"""
+    if not use_mlflow:
+        logging.info("=" * 50)
+        logging.info(f"STARTING MODEL TESTING (MLflow DISABLED)")
+        logging.info(f"Model: {backbone}, Freeze: {freeze_backbone}")
+        logging.info(f"Test samples: {len(test_loader.dataset)}")
+        logging.info("=" * 50)
+
+        # Run test without MLflow
+        test_results = test_classifier(model, test_loader, plots_dir, backbone, freeze_backbone, class_names, device)
+        return test_results
+
+    # MLflow enabled
+    setup_mlflow(use_mlflow)
 
     run_name = f"test_{backbone}_freeze_{freeze_backbone}_{datetime.now().strftime('%H%M%S')}"
 
@@ -42,9 +54,11 @@ def test_with_mlflow(model, test_loader, plots_dir, backbone, freeze_backbone, c
             "device": str(device)
         })
 
-        logging.info(f"STARTING MODEL TESTING")
+        logging.info("=" * 50)
+        logging.info(f"STARTING MODEL TESTING (MLflow ENABLED)")
         logging.info(f"Model: {backbone}, Freeze: {freeze_backbone}")
         logging.info(f"Test samples: {len(test_loader.dataset)}")
+        logging.info("=" * 50)
 
         # Run the test
         test_results = test_classifier(model, test_loader, plots_dir, backbone, freeze_backbone, class_names, device)
@@ -61,7 +75,9 @@ def test_with_mlflow(model, test_loader, plots_dir, backbone, freeze_backbone, c
             }
             mlflow.log_metrics(main_metrics)
 
+            logging.info("=" * 50)
             logging.info("TEST RESULTS SUMMARY")
+            logging.info("=" * 50)
             for metric, value in main_metrics.items():
                 logging.info(f"{metric}: {value:.4f}")
 
@@ -75,15 +91,14 @@ def test_with_mlflow(model, test_loader, plots_dir, backbone, freeze_backbone, c
         # Log the tested model
         mlflow.pytorch.log_model(model, "tested_model")
 
+        logging.info("=" * 50)
         logging.info("TESTING COMPLETED SUCCESSFULLY")
+        logging.info("=" * 50)
 
         return test_results
 
 
 def main(args):
-    # Setup MLflow
-    setup_mlflow()
-
     # Define the data transformation
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
@@ -100,6 +115,7 @@ def main(args):
     logging.info(f"Backbone: {BACKBONE}, Freeze: {FREEZE_BACKBONE}")
     logging.info(f"Number of classes: {len(CLASS_NAMES)}")
     logging.info(f"Classes: {CLASS_NAMES}")
+    logging.info(f"MLflow: {'ENABLED' if args.use_mlflow else 'DISABLED'}")
 
     if args.mode == "train":
         # Load the entire dataset
@@ -117,15 +133,20 @@ def main(args):
         k_folds = 5
         kfold = KFold(n_splits=k_folds, shuffle=True, random_state=42)
 
-        # Log experiment-level parameters (NO PARENT RUN - FIXED)
-        mlflow.log_param("k_folds", k_folds)
-        mlflow.log_param("total_samples", len(dataset))
-        mlflow.log_param("dataset_path", args.data_path)
+        # Log experiment-level parameters to MLflow only if enabled
+        if args.use_mlflow:
+            setup_mlflow(args.use_mlflow)
+            mlflow.log_param("k_folds", k_folds)
+            mlflow.log_param("total_samples", len(dataset))
+            mlflow.log_param("dataset_path", args.data_path)
 
+        logging.info("=" * 50)
         logging.info(f"STARTING {k_folds}-FOLD CROSS VALIDATION")
         logging.info(f"Total dataset samples: {len(dataset)}")
         logging.info(f"Batch size: {BATCH_SIZE}")
         logging.info(f"Max epochs: {MAX_EPOCHS_NUM}")
+        logging.info(f"MLflow: {'ENABLED' if args.use_mlflow else 'DISABLED'}")
+        logging.info("=" * 50)
 
         fold_histories = []
 
@@ -133,7 +154,9 @@ def main(args):
         for fold, (train_ids, val_ids) in enumerate(kfold.split(dataset)):
             # Print current fold
             logging.info('')
+            logging.info('=' * 50)
             logging.info(f'FOLD {fold + 1}/{k_folds}')
+            logging.info('=' * 50)
 
             # Sample elements randomly from a given list of ids, no replacement
             train_subsampler = SubsetRandomSampler(train_ids)
@@ -151,7 +174,7 @@ def main(args):
             optimizer = torch.optim.Adam(model.parameters(), lr=0.00001)
 
             # Log fold information
-            logging.info(f''' Fold {fold + 1} Details:
+            logging.info(f'''Fold {fold + 1} Details:
     Training size:   {len(train_subsampler)}
     Validation size: {len(val_subsampler)}
     Backbone:        {BACKBONE}
@@ -159,12 +182,14 @@ def main(args):
     Batch size:      {BATCH_SIZE}
     Epochs:          {MAX_EPOCHS_NUM}
     Device:          {device}
+    MLflow:          {'ENABLED' if args.use_mlflow else 'DISABLED'}
             ''')
 
             # Train the model for this fold
             fold_history = train_classifier(
                 model, train_loader, val_loader, criterion, optimizer, MAX_EPOCHS_NUM,
-                MODEL_DIR, PLOTS_DIR, device, BACKBONE, FREEZE_BACKBONE, fold=fold
+                MODEL_DIR, PLOTS_DIR, device, BACKBONE, FREEZE_BACKBONE,
+                fold=fold, use_mlflow=args.use_mlflow
             )
             fold_histories.append(fold_history)
 
@@ -177,16 +202,20 @@ def main(args):
             avg_best_val_loss = sum(h['best_val_loss'] for h in fold_histories) / len(fold_histories)
             avg_best_val_accuracy = sum(h['best_val_accuracy'] for h in fold_histories) / len(fold_histories)
 
-            mlflow.log_metrics({
-                "cv_avg_best_val_loss": avg_best_val_loss,
-                "cv_avg_best_val_accuracy": avg_best_val_accuracy
-            })
+            if args.use_mlflow:
+                mlflow.log_metrics({
+                    "cv_avg_best_val_loss": avg_best_val_loss,
+                    "cv_avg_best_val_accuracy": avg_best_val_accuracy
+                })
 
             logging.info('')
+            logging.info("=" * 50)
             logging.info("CROSS-VALIDATION SUMMARY")
+            logging.info("=" * 50)
             logging.info(f'Average best val loss: {avg_best_val_loss:.6f}')
             logging.info(f'Average best val accuracy: {avg_best_val_accuracy:.2f}%')
             logging.info("TRAINING COMPLETED SUCCESSFULLY!")
+            logging.info("=" * 50)
 
     elif args.mode == "test":
         if not os.path.exists(PLOTS_DIR):
@@ -198,28 +227,30 @@ def main(args):
 
         # Load model checkpoint
         model, _, _ = load_checkpoint(model, args.model_path)
-        logging.info(f"🔧 Model loaded from: {args.model_path}")
+        logging.info(f"Model loaded from: {args.model_path}")
 
-        # Perform testing with MLflow logging
+        # Perform testing with optional MLflow logging
         test_results = test_with_mlflow(
             model, test_loader, PLOTS_DIR, BACKBONE, FREEZE_BACKBONE,
-            CLASS_NAMES, device, args.model_path
+            CLASS_NAMES, device, args.model_path, use_mlflow=args.use_mlflow
         )
 
         if test_results:
-            logging.info("Test completed successfully with MLflow logging")
+            logging.info("Test completed successfully")
         else:
             logging.error("Test failed or returned no results")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="PyTorch Classification with MLflow")
+    parser = argparse.ArgumentParser(description="PyTorch Classification with Optional MLflow")
     parser.add_argument("--mode", type=str, choices=["train", "test"], required=True,
                         help="Mode to run: 'train' or 'test'")
     parser.add_argument("--data_path", type=str, required=True,
                         help="Path to dataset")
     parser.add_argument("--model_path", type=str, default="./models/",
                         help="Directory to save or load the model")
+    parser.add_argument("--use_mlflow", action="store_true",
+                        help="Enable MLflow logging (default: False)")
 
     args = parser.parse_args()
 

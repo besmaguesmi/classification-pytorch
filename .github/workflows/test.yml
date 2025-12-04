@@ -38,7 +38,7 @@ jobs:
       # DVC
       - name: Create project4-442608-5ffc36a5828f.json
         env:
-          GDRIVE_CREDENTIALS_DATA: ${{ secrets.CREDENTIAL }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run: |
           echo $GDRIVE_CREDENTIALS_DATA > project4-442608-5ffc36a5828f.json
 
@@ -55,3 +55,4 @@ jobs:
           uv run python main.py --mode test \
             --data_path data/test \
             --model_path models/cnn_resnet18_freeze_backbone_False.pth
+

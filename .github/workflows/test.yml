@@ -40,7 +40,7 @@ jobs:
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run: |
-          echo $GDRIVE_CREDENTIALS_DATA > project4-442608-5ffc36a5828f.json
+          echo "$GDRIVE_CREDENTIALS_DATA" > project4-442608-5ffc36a5828f.json
 
       - name: Modify DVC Remote
         run: |
@@ -54,5 +54,6 @@ jobs:
         run: |
           uv run python main.py --mode test \
             --data_path data/test \
-            --model_path models/cnn_resnet18_freeze_backbone_False.pth
+            --model_path models/cnn_resnet18_freeze_backbone_True_fold_4.pth
+
 

@@ -1,6 +1,6 @@
 # CNN Configuration
 BATCH_SIZE = 16
-MAX_EPOCHS_NUM = 2
+MAX_EPOCHS_NUM = 5
 FREEZE_BACKBONE = True
 CLASS_NAMES = ["sea", "forest"]
 BACKBONE = 'resnet18'

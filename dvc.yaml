@@ -25,6 +25,7 @@ stages:
       - train.k_folds
       - model.backbone
 
+
   test:
     cmd: python main.py --mode test --data_path ${data_path}/test --model_path ${model_path}
     deps:

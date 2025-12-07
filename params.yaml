@@ -11,12 +11,12 @@ model:
   class_names: ['sea', 'forest']
 
 train:
-  batch_size: 16
+  batch_size: 32
   max_epochs: 2
-  learning_rate: 0.00001
-  freeze_backbone: True
+  learning_rate: 0.01
+  freeze_backbone: False
   patience: 10
-  k_folds: 5
+  k_folds: 3
 
 paths:
   model_dir: './models/'

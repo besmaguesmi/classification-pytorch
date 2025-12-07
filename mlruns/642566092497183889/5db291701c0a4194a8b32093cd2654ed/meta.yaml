@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/642566092497183889/5db291701c0a4194a8b32093cd2654ed/artifacts
+end_time: 1765145177005
+entry_point_name: ''
+experiment_id: '642566092497183889'
+lifecycle_stage: active
+run_id: 5db291701c0a4194a8b32093cd2654ed
+run_name: resnet18_freeze_True_fold_0_230423
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765145063077
+status: 3
+tags: []
+user_id: Dell

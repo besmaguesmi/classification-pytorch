@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/642566092497183889/795f636506ca45ecb4aa23a5e50cf791/artifacts
+deleted_time: 1764882772659
+end_time: 1764881406011
+entry_point_name: ''
+experiment_id: '642566092497183889'
+lifecycle_stage: deleted
+run_id: 795f636506ca45ecb4aa23a5e50cf791
+run_name: loud-rat-948
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1764881405659
+status: 3
+tags: []
+user_id: Dell

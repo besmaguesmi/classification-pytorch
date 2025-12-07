@@ -1,0 +1,27 @@
+{
+  "cross_validation": {
+    "num_folds": 3,
+    "avg_best_val_loss": 0.31053766690505047,
+    "avg_best_val_accuracy": 93.36241664337341,
+    "fold_details": [
+      {
+        "fold": 1,
+        "best_val_loss": 0.1800128385424614,
+        "best_val_accuracy": 92.42902208201893,
+        "final_epoch": 2
+      },
+      {
+        "fold": 2,
+        "best_val_loss": 0.5199448511004447,
+        "best_val_accuracy": 92.72151898734177,
+        "final_epoch": 2
+      },
+      {
+        "fold": 3,
+        "best_val_loss": 0.23165531107224524,
+        "best_val_accuracy": 94.9367088607595,
+        "final_epoch": 2
+      }
+    ]
+  }
+}

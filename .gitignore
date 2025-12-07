@@ -3,8 +3,5 @@
 .dvc/tmp
 .dvc/cache
 /models
-<<<<<<< HEAD
-=======
 venv/
 /*.json
->>>>>>> 3d73ca9 (locally train model & integrate DVC)

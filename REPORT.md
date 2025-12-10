@@ -80,7 +80,7 @@ A service account was created to enable programmatic access to Google Drive with
 - **Role:** Editor access for Google Drive operations
 - **Authentication:** JSON key file
 
-![Service Account Setup](/classification-pytorch/screenshots/service-account-setup.png)
+![Service Account Setup](./screenshots/service-account-setup.png)
 *Figure 1: Service account creation in Google Cloud Console*
 
 **Key Actions:**

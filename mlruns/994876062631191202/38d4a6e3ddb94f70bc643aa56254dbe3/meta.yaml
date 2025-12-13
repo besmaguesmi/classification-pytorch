@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/994876062631191202/38d4a6e3ddb94f70bc643aa56254dbe3/artifacts
+deleted_time: 1765624684319
+end_time: 1765624258113
+entry_point_name: ''
+experiment_id: '994876062631191202'
+lifecycle_stage: deleted
+run_id: 38d4a6e3ddb94f70bc643aa56254dbe3
+run_name: bustling-newt-662
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765623880365
+status: 3
+tags: []
+user_id: MSI

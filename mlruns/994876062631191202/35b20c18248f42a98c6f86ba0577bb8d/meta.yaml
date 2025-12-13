@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/994876062631191202/35b20c18248f42a98c6f86ba0577bb8d/artifacts
+end_time: 1765624611056
+entry_point_name: ''
+experiment_id: '994876062631191202'
+lifecycle_stage: active
+run_id: 35b20c18248f42a98c6f86ba0577bb8d
+run_name: Run_High_LR
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765624268582
+status: 3
+tags: []
+user_id: MSI

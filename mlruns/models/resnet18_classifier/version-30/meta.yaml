@@ -1,0 +1,15 @@
+creation_timestamp: 1765624309096
+current_stage: None
+deployment_job_state: null
+description: ''
+last_updated_timestamp: 1765624309096
+model_id: m-56f27bf6811340e7827b243f162c0d51
+name: resnet18_classifier
+run_id: 995d4091c28b4c4f86bb0af4f071534a
+run_link: ''
+source: models:/m-56f27bf6811340e7827b243f162c0d51
+status: READY
+status_message: null
+storage_location: mlflow-artifacts:/994876062631191202/models/m-56f27bf6811340e7827b243f162c0d51/artifacts
+user_id: null
+version: 30

@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/994876062631191202/c546426aeb9a4fbab04bd12b1650a276/artifacts
+end_time: 1765622839695
+entry_point_name: ''
+experiment_id: '994876062631191202'
+lifecycle_stage: active
+run_id: c546426aeb9a4fbab04bd12b1650a276
+run_name: resnet18_freeze_True_fold_3_114614
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765622774838
+status: 3
+tags: []
+user_id: MSI

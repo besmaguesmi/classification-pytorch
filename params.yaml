@@ -1,0 +1,32 @@
+# All configuration in one place - change here, everything updates!
+
+data:
+  data_path: './data'
+  train_ratio: 0.8
+  val_ratio: 0.1
+  test_ratio: 0.1
+
+model:
+  backbone: 'resnet18'
+  class_names: ['sea', 'forest']
+
+train:
+  batch_size: 16
+  max_epochs: 2
+  learning_rate: 0.00001
+  freeze_backbone: True
+  patience: 10
+  k_folds: 5
+
+paths:
+  model_dir: './models/'
+  plots_dir: './plots/'
+  metrics_dir: './metrics/'
+
+mlflow:
+  tracking_uri: 'http://localhost:5000'
+  experiment_name: 'pytorch-classification'
+
+dvc:
+  remote: 'myremote'
+  enabled: True

@@ -38,7 +38,7 @@ jobs:
       # DVC
       - name: Create project4-442608-5ffc36a5828f.json
         env:
-          GDRIVE_CREDENTIALS_DATA: ${{ secrets.CREDENTIAL }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.CREDENTIALS }}
         run: |
           echo $GDRIVE_CREDENTIALS_DATA > project4-442608-5ffc36a5828f.json
 

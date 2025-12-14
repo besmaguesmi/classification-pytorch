@@ -1,7 +1,44 @@
+vars:
+  - data_path: "./data"
+  - model_path: "./models/cnn_resnet18_freeze_backbone_True_fold_3.pth"
+
 stages:
-  train_model:
-    cmd: python src/train.py
+
+  train:
+    cmd: python main.py --mode train --data_path ${data_path}/train
     deps:
-    - data/train/
-    outs:
-    - models/cnn_resnet18_freeze_backbone_False.pth
+      - main.py
+      - train.py
+      - src/test.py
+      - src/cnn.py
+      - src/datasets.py
+      - src/config.py
+      - src/utils.py
+      - src/load_ckpts.py
+      - src/run_experiments.py
+      - ${data_path}/train
+    params:
+      - train.batch_size
+      - train.max_epochs
+      - train.learning_rate
+      - train.freeze_backbone
+      - train.k_folds
+      - model.backbone
+
+
+  test:
+    cmd: python main.py --mode test --data_path ${data_path}/test --model_path ${model_path}
+    deps:
+      - main.py
+      - src/test.py
+      - src/cnn.py
+      - src/datasets.py
+      - models/
+      - ${data_path}/test
+    metrics:
+      - metrics/test_metrics.json:
+          cache: false
+    plots:
+      - plots/:
+          cache: false
+          persist: true

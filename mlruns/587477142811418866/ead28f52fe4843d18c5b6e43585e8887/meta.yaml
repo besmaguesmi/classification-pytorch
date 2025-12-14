@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/587477142811418866/ead28f52fe4843d18c5b6e43585e8887/artifacts
+end_time: 1765740973250
+entry_point_name: ''
+experiment_id: '587477142811418866'
+lifecycle_stage: active
+run_id: ead28f52fe4843d18c5b6e43585e8887
+run_name: gaudy-duck-826
+run_uuid: ead28f52fe4843d18c5b6e43585e8887
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765740900495
+status: 3
+tags: []
+user_id: USERµ

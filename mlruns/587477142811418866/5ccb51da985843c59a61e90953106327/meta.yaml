@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/587477142811418866/5ccb51da985843c59a61e90953106327/artifacts
+end_time: 1765740780700
+entry_point_name: ''
+experiment_id: '587477142811418866'
+lifecycle_stage: active
+run_id: 5ccb51da985843c59a61e90953106327
+run_name: chill-mare-777
+run_uuid: 5ccb51da985843c59a61e90953106327
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765740780375
+status: 3
+tags: []
+user_id: USERµ

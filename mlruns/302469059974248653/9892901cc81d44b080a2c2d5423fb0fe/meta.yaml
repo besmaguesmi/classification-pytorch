@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/302469059974248653/9892901cc81d44b080a2c2d5423fb0fe/artifacts
+end_time: 1765488738926
+entry_point_name: ''
+experiment_id: '302469059974248653'
+lifecycle_stage: active
+run_id: 9892901cc81d44b080a2c2d5423fb0fe
+run_name: defiant-tern-45
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765488738694
+status: 3
+tags: []
+user_id: ihebb

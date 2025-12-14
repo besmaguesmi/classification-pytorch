@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/302469059974248653/47cdf00403b74a0d91eba42bdc5b5193/artifacts
+end_time: 1765489536955
+entry_point_name: ''
+experiment_id: '302469059974248653'
+lifecycle_stage: active
+run_id: 47cdf00403b74a0d91eba42bdc5b5193
+run_name: nebulous-bat-839
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765489063362
+status: 3
+tags: []
+user_id: ihebb

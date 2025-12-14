@@ -1,0 +1,78 @@
+{
+  "accuracy": 0.9714285714285714,
+  "misclassification_rate": 0.02857142857142858,
+  "test_loss": 0.038441266445624935,
+  "precision": 0.9732142857142857,
+  "recall": 0.9714285714285714,
+  "f1_score": 0.9715231005553586,
+  "total_samples": 35,
+  "correct_predictions": 34,
+  "confusion_matrix": [
+    [
+      15,
+      0
+    ],
+    [
+      1,
+      19
+    ]
+  ],
+  "classification_report": {
+    "sea": {
+      "precision": 0.9375,
+      "recall": 1.0,
+      "f1-score": 0.967741935483871,
+      "support": 15.0
+    },
+    "forest": {
+      "precision": 1.0,
+      "recall": 0.95,
+      "f1-score": 0.9743589743589743,
+      "support": 20.0
+    },
+    "accuracy": 0.9714285714285714,
+    "macro avg": {
+      "precision": 0.96875,
+      "recall": 0.975,
+      "f1-score": 0.9710504549214227,
+      "support": 35.0
+    },
+    "weighted avg": {
+      "precision": 0.9732142857142857,
+      "recall": 0.9714285714285714,
+      "f1-score": 0.9715231005553586,
+      "support": 35.0
+    }
+  },
+  "per_class_metrics": {
+    "precision": {
+      "sea": 0.9375,
+      "forest": 1.0
+    },
+    "recall": {
+      "sea": 1.0,
+      "forest": 0.95
+    },
+    "f1_score": {
+      "sea": 0.967741935483871,
+      "forest": 0.9743589743589743
+    },
+    "support": {
+      "sea": 15,
+      "forest": 20
+    }
+  },
+  "model_metadata": {
+    "backbone": "resnet18",
+    "freeze_backbone": true,
+    "num_classes": 2,
+    "class_names": [
+      "sea",
+      "forest"
+    ]
+  },
+  "plots": {
+    "confusion_matrix": "./plots/confusion_matrix_resnet18_freeze_backbone_True.png",
+    "confusion_matrix_normalized": "./plots/confusion_matrix_normalized_resnet18_freeze_backbone_True.png"
+  }
+}

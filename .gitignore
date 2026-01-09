@@ -2,3 +2,31 @@
 .dvc/config.local
 .dvc/tmp
 .dvc/cache
+
+# Google Cloud Service Account Credentials - NEVER COMMIT!
+*credentials*.json
+*.iam.gserviceaccount.com.json
+datamanagement-*.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# MLflow
+mlruns/
+mlartifacts/
+
+# Model outputs
+models/*.pth
+plots/
+*.png
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo

@@ -1,5 +1,7 @@
 # Aerial Image Classification: Sea vs. Forest
 
+**Student:** Sarra Dhouaifi 
+
 ## Project Overview
 This project implements an end-to-end MLOps pipeline for binary image classification, distinguishing between aerial views of **Forests** and **Sea**.
 

@@ -48,7 +48,7 @@ jobs:
 
       - name: DVC Pull Data
         run: |
-          uv run dvc pull -v
+          uv run dvc pull -v --force
 
       - name: Run model tests
         run: |

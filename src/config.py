@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-# CNN Configuration
-BATCH_SIZE = 16
-MAX_EPOCHS_NUM = 1
-FREEZE_BACKBONE = False
-CLASS_NAMES = ["sea", "forest"]
-BACKBONE = 'resnet18'
-MODEL_DIR = './models/'
-PLOTS_DIR = './plots/'
-=======
 # config.py
 import yaml
 import os
@@ -116,4 +106,3 @@ CLASS_NAMES = config.CLASS_NAMES
 BACKBONE = config.BACKBONE
 MODEL_DIR = config.MODEL_DIR
 PLOTS_DIR = config.PLOTS_DIR
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705

@@ -1,29 +1,17 @@
 import logging
 import os
-<<<<<<< HEAD
-
-=======
 import json
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 import torch
-<<<<<<< HEAD
-from sklearn.metrics import confusion_matrix, classification_report
-=======
 import numpy as np
 from sklearn.metrics import confusion_matrix, classification_report, precision_recall_fscore_support
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
 
 
 def test_classifier(model, test_loader, plot_dir, backbone, freeze_backbone, class_names, device):
     """
-<<<<<<< HEAD
-    Evaluates the model on labeled data or runs inference on unlabeled data and saves the results.
-=======
     Evaluates the model on labeled data and returns comprehensive metrics for MLflow logging.
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
 
     Parameters:
     -----------
@@ -32,11 +20,7 @@ def test_classifier(model, test_loader, plot_dir, backbone, freeze_backbone, cla
     test_loader : DataLoader
         DataLoader for the test dataset.
     plot_dir : str
-<<<<<<< HEAD
-        Directory path to save evaluation plots (only used for evaluation).
-=======
         Directory path to save evaluation plots.
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
     backbone : str
         Name of the model's backbone architecture.
     freeze_backbone : bool
@@ -48,18 +32,6 @@ def test_classifier(model, test_loader, plot_dir, backbone, freeze_backbone, cla
 
     Returns:
     --------
-<<<<<<< HEAD
-    None
-    """
-    # Set the model to evaluation mode
-    model.eval()
-    # For evaluation, we need to track accuracy, confusion matrix, etc.
-    correct_preds = 0
-    incorrect_preds = 0
-    total_samples = 0
-    true_labels = []
-    predictions = []
-=======
     dict: Comprehensive test metrics and results
     """
     # Set the model to evaluation mode
@@ -75,64 +47,20 @@ def test_classifier(model, test_loader, plot_dir, backbone, freeze_backbone, cla
 
     # Add loss calculation if you want it
     criterion = torch.nn.CrossEntropyLoss()
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
 
     # CUDA memory consumption (if using GPU)
     if device.type == 'cuda':
         torch.cuda.reset_max_memory_allocated(device)
-<<<<<<< HEAD
-
-    with torch.no_grad():
-        for images, labels in test_loader:
-=======
         initial_memory = torch.cuda.memory_allocated(device)
 
     logging.info("Running inference on test dataset...")
 
     with torch.no_grad():
         for batch_idx, (images, labels) in enumerate(test_loader):
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
             images = images.to(device)
             labels = labels.to(device).long()
 
             # Forward pass through the model
-<<<<<<< HEAD
-            output = model(images).to(device)
-
-            # Get predictions
-            _, pred = output.max(1)
-
-            # Compute accuracy
-            correct_preds += pred.eq(labels).sum().item()
-            incorrect_preds += (pred != labels).sum().item()
-            total_samples += labels.size(0)
-
-            # Collect true labels and predictions for metrics
-            true_labels.extend(labels.cpu().numpy())
-            predictions.extend(pred.cpu().numpy())
-
-    # Evaluation metrics
-    accuracy = correct_preds / total_samples
-    wrong_pred = incorrect_preds / total_samples
-
-    logging.info(f"Mis-classification rate: {wrong_pred * 100:.2f}%, Accuracy: {accuracy * 100:.2f}%")
-
-    # Confusion matrix and classification report
-    cm = confusion_matrix(true_labels, predictions)
-    class_report = classification_report(true_labels, predictions, output_dict=True)
-    class_report_df = pd.DataFrame(class_report).transpose()
-    logging.info("Confusion Matrix:\n%s", pd.DataFrame(cm))
-    logging.info("Class Report:\n%s", class_report_df)
-
-    # Plot confusion matrix
-    plt.figure(figsize=(10, 7))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', cbar=False, xticklabels=class_names, yticklabels=class_names)
-    plt.ylabel('True Labels')
-    plt.xlabel('Predicted Labels')
-    plt.title('Confusion Matrix')
-    plt.savefig(os.path.join(plot_dir, f"cm_{backbone}_freeze_backbone_{freeze_backbone}.png"))
-    plt.show()
-=======
             outputs = model(images)
 
             # Calculate loss (optional)
@@ -330,4 +258,3 @@ def test_model_with_thresholds(model, test_loader, plot_dir, backbone, freeze_ba
         logging.error(f"Loss {results['test_loss']:.4f} > maximum allowed {max_loss}")
 
     return results
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705

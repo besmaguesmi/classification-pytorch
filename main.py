@@ -1,16 +1,10 @@
-<<<<<<< HEAD
-=======
 # main.py
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
 import argparse
 import logging
 import os
 import warnings
-<<<<<<< HEAD
-=======
 from datetime import datetime
 import json
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
 
 warnings.filterwarnings('ignore')
 import torch
@@ -19,17 +13,6 @@ from torch.utils.data import DataLoader, SubsetRandomSampler
 from sklearn.model_selection import KFold
 from src.datasets import Dataset
 from src.cnn import Classifier
-<<<<<<< HEAD
-from src.config import *
-from train import train_classifier
-from src.test import test_classifier
-from src.load_ckpts import load_checkpoint
-import mlflow
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
-def main(args):
-=======
 from src.config import config
 from train import train_classifier, setup_mlflow
 from src.test import test_classifier, test_model_with_thresholds
@@ -169,7 +152,6 @@ def main(args):
                 logging.error("Data not found. Please run 'dvc pull' to get data.")
                 return
 
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
     # Define the data transformation
     transform = transforms.Compose([
         transforms.Resize((224, 224)),
@@ -178,14 +160,6 @@ def main(args):
     ])
 
     # Initialize the CNN model
-<<<<<<< HEAD
-    model = Classifier(len(CLASS_NAMES), backbone=BACKBONE, freeze_backbone=FREEZE_BACKBONE)
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    model.to(device)
-
-    # MLflow URI from environment variables
-    mlflow.set_tracking_uri(os.getenv("SECRET_HOST"))
-=======
     model = Classifier(
         len(config.CLASS_NAMES),
         backbone=config.BACKBONE,
@@ -200,25 +174,10 @@ def main(args):
     logging.info(f"Classes: {config.CLASS_NAMES}")
     logging.info(f"MLflow: {'ENABLED' if args.use_mlflow else 'DISABLED'}")
     logging.info(f"DVC: {'ENABLED' if config.params['dvc']['enabled'] else 'DISABLED'}")
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
 
     if args.mode == "train":
         # Load the entire dataset
         dataset = Dataset(root_dir=args.data_path, transform=transform, mode=args.mode)
-<<<<<<< HEAD
-        
-        # Create directories for saving model and plots if they do not exist
-        if not os.path.exists(MODEL_DIR):
-            os.makedirs(MODEL_DIR)
-        if not os.path.exists(PLOTS_DIR):
-            os.makedirs(PLOTS_DIR)
-
-        criterion = torch.nn.CrossEntropyLoss()
-
-        # Define K-fold cross-validation with k=5
-        k_folds = 5
-        kfold = KFold(n_splits=k_folds, shuffle=True)
-=======
 
         # Create directories for saving model and plots if they do not exist
         os.makedirs(config.MODEL_DIR, exist_ok=True)
@@ -251,55 +210,20 @@ def main(args):
         logging.info("=" * 50)
 
         fold_histories = []
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
 
         # K-fold Cross Validation model evaluation
         for fold, (train_ids, val_ids) in enumerate(kfold.split(dataset)):
             # Print current fold
-<<<<<<< HEAD
-            logging.info(f'FOLD {fold}')
-            logging.info('--------------------------------')
-=======
             logging.info('')
             logging.info('=' * 50)
             logging.info(f'FOLD {fold + 1}/{k_folds}')
             logging.info('=' * 50)
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
 
             # Sample elements randomly from a given list of ids, no replacement
             train_subsampler = SubsetRandomSampler(train_ids)
             val_subsampler = SubsetRandomSampler(val_ids)
 
             # Define data loaders for training and validation
-<<<<<<< HEAD
-            train_loader = DataLoader(dataset, batch_size=BATCH_SIZE, sampler=train_subsampler)
-            val_loader = DataLoader(dataset, batch_size=BATCH_SIZE, sampler=val_subsampler)
-
-            # Initialise optimizer
-            optimizer = torch.optim.Adam(model.parameters(), lr=0.00001)
-
-            # Log fold and training information
-            logging.info(f'''Starting training for fold {fold}:
-                Training size:   {len(train_subsampler)}
-                Validation size: {len(val_subsampler)}
-                Backbone:        {BACKBONE}
-                Freeze Backbone: {FREEZE_BACKBONE}
-                Batch size:      {BATCH_SIZE}
-                Epochs:          {MAX_EPOCHS_NUM}
-                Device:          {device}
-            ''')
-
-            # Train the model for this fold
-            train_classifier(model, train_loader, val_loader, criterion, optimizer, MAX_EPOCHS_NUM, MODEL_DIR,
-                             PLOTS_DIR, device, BACKBONE, FREEZE_BACKBONE)
-
-            # Optionally clear GPU cache
-            torch.cuda.empty_cache()
-
-        logging.info('Training complete.')
-
-    elif args.mode == "test":
-=======
             train_loader = DataLoader(dataset, batch_size=config.BATCH_SIZE, sampler=train_subsampler)
             val_loader = DataLoader(dataset, batch_size=config.BATCH_SIZE, sampler=val_subsampler)
 
@@ -367,21 +291,12 @@ def main(args):
         os.makedirs(config.PLOTS_DIR, exist_ok=True)
         os.makedirs(config.METRICS_DIR, exist_ok=True)
 
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
         # Create the dataset for testing
         testset = Dataset(root_dir=args.data_path, transform=transform, mode=args.mode)
         test_loader = DataLoader(dataset=testset, batch_size=1, shuffle=False)
 
         # Load model checkpoint
         model, _, _ = load_checkpoint(model, args.model_path)
-<<<<<<< HEAD
-        
-        # Perform testing
-        test_classifier(model, test_loader, PLOTS_DIR, BACKBONE, FREEZE_BACKBONE, CLASS_NAMES, device)
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Classification")
-=======
         logging.info(f"Model loaded from: {args.model_path}")
 
         # Perform testing with optional MLflow logging
@@ -415,17 +330,10 @@ if __name__ == "__main__":
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="PyTorch Classification with DVC & MLflow")
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
     parser.add_argument("--mode", type=str, choices=["train", "test"], required=True,
                         help="Mode to run: 'train' or 'test'")
     parser.add_argument("--data_path", type=str, required=True,
                         help="Path to dataset")
-<<<<<<< HEAD
-    parser.add_argument("--model_path", type=str, default="./models/",
-                        help="Directory to save or load the model")
-
-    args = parser.parse_args()
-=======
     parser.add_argument("--model_path", type=str, default="./models/best_model.pth",
                         help="Path to load/save the model")
     parser.add_argument("--use_mlflow", action="store_true",
@@ -447,5 +355,4 @@ if __name__ == "__main__":
         logging.info("If using DVC, run: dvc pull")
         exit(1)
 
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705
     main(args)

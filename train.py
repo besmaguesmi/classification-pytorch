@@ -118,7 +118,7 @@ def train_classifier(model, train_loader, val_loader, criterion, optimizer, num_
 
     # MLflow context manager only if MLflow is enabled
     if use_mlflow:
-        run_context = mlflow.start_run(run_name=run_name)
+        run_context = mlflow.start_run(run_name=run_name,nested=True)
     else:
         # Create a dummy context manager that does nothing
         from contextlib import nullcontext

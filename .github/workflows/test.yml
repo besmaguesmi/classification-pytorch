@@ -40,7 +40,16 @@ jobs:
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.CREDENTIAL }}
         run: |
-          echo "$GDRIVE_CREDENTIALS_DATA" > project4-442608-5ffc36a5828f.json
+          printf '%s\n' "$GDRIVE_CREDENTIALS_DATA" > project4-442608-5ffc36a5828f.json
+          
+      - name: Verify credentials file
+        run: |
+          if [ ! -f project4-442608-5ffc36a5828f.json ]; then
+            echo "ERROR: Credentials file not created"
+            exit 1
+          fi
+          echo "Credentials file size: $(wc -c < project4-442608-5ffc36a5828f.json) bytes"
+          echo "First line: $(head -n 1 project4-442608-5ffc36a5828f.json)"
 
       - name: Modify DVC Remote
         run: |

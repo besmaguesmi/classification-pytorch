@@ -37,23 +37,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt 
 
-      # DVC
-      - name: Create project4-442608-5ffc36a5828f.json
+      # DVC - Setup credentials and pull data
+      - name: Create DVC credentials directory
+        run: mkdir -p .dvc/tmp
+
+      - name: Create service account JSON
         env:
           GDRIVE_CREDENTIALS_DATA: ${{ secrets.CREDENTIAL }}
         run: |
-          echo $GDRIVE_CREDENTIALS_DATA > project4-442608-5ffc36a5828f.json
+          echo "$GDRIVE_CREDENTIALS_DATA" > .dvc/tmp/gdrive_service_account.json
 
-      - name: Modify DVC Remote
+      - name: Configure DVC remote with credentials
         run: |
-          uv run dvc remote modify --local gdrive_remote gdrive_service_account_json_file_path project4-442608-5ffc36a5828f.json
+          dvc remote modify --local gdrive_remote gdrive_service_account_json_file_path .dvc/tmp/gdrive_service_account.json
 
       - name: DVC Pull Data
         run: |
-          uv run dvc pull -v
+          dvc pull -v
 
       - name: Run model tests
         run: |
-          uv run python main.py --mode test \
+          python main.py --mode test \
             --data_path data/test \
             --model_path models/cnn_resnet18_freeze_backbone_False.pth

@@ -28,6 +28,7 @@ logging.basicConfig(
 
 def check_dvc_data(data_path):
     """Check if DVC data is available"""
+    
     if not os.path.exists(data_path):
         logging.warning(f"Data path {data_path} not found.")
         logging.warning("If using DVC, run: dvc pull")

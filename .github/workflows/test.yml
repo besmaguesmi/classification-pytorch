@@ -54,4 +54,4 @@ jobs:
         run: |
           uv run python main.py --mode test \
             --data_path data/test \
-            --model_path models/cnn_resnet18_freeze_backbone_False.pth
+            --model_path models/cnn_resnet18_freeze_backbone_True_fold_3.pth

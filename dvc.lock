@@ -1,0 +1,94 @@
+schema: '2.0'
+stages:
+  train:
+    cmd: python main.py --mode train --data_path ./data/train
+    deps:
+    - path: ./data/train
+      hash: md5
+      md5: 83234c92aff446a5269423cbefa333d5.dir
+      size: 15391191
+      nfiles: 949
+    - path: main.py
+      hash: md5
+      md5: db4364682bce73bdebba71157a0e2b43
+      size: 14945
+    - path: src/cnn.py
+      hash: md5
+      md5: 64e0fdedcf7c4e5d5c3fbe7fa26e4a0d
+      size: 2003
+    - path: src/config.py
+      hash: md5
+      md5: 9ff8ce84a821d93aeb360c1b41f2b271
+      size: 3160
+    - path: src/datasets.py
+      hash: md5
+      md5: 71872e148150d466a2ff8084421f11db
+      size: 1851
+    - path: src/load_ckpts.py
+      hash: md5
+      md5: e60e0d28acd01ca4c647832bd812a1c8
+      size: 586
+    - path: src/run_experiments.py
+      hash: md5
+      md5: 5390bf318e5ce72654ef00073097a02f
+      size: 4154
+    - path: src/test.py
+      hash: md5
+      md5: af2dc85efd18a414f421574a538e1f94
+      size: 9748
+    - path: src/utils.py
+      hash: md5
+      md5: b247dfe574bf56c5fe17e94b5d37b7f8
+      size: 1044
+    - path: train.py
+      hash: md5
+      md5: fe843fd65f86570dc631ee5a008aebb8
+      size: 11399
+    params:
+      params.yaml:
+        model.backbone: resnet18
+        train.batch_size: 32
+        train.freeze_backbone: false
+        train.k_folds: 3
+        train.learning_rate: 0.01
+        train.max_epochs: 2
+  test:
+    cmd: python main.py --mode test --data_path ./data/test --model_path 
+      ./models/cnn_resnet18_freeze_backbone_True_fold_3.pth
+    deps:
+    - path: ./data/test
+      hash: md5
+      md5: 8df9026a3ec1d4e5b2a1870d63642223.dir
+      size: 595995
+      nfiles: 35
+    - path: main.py
+      hash: md5
+      md5: db4364682bce73bdebba71157a0e2b43
+      size: 14945
+    - path: models/
+      hash: md5
+      md5: 0eb64a0b8443543e70d9b41da497f166.dir
+      size: 358343514
+      nfiles: 8
+    - path: src/cnn.py
+      hash: md5
+      md5: 64e0fdedcf7c4e5d5c3fbe7fa26e4a0d
+      size: 2003
+    - path: src/datasets.py
+      hash: md5
+      md5: 71872e148150d466a2ff8084421f11db
+      size: 1851
+    - path: src/test.py
+      hash: md5
+      md5: af2dc85efd18a414f421574a538e1f94
+      size: 9748
+    outs:
+    - path: metrics/test_metrics.json
+      hash: md5
+      md5: 6c796969d75e8927532c8207cc2d38c6
+      size: 1834
+    - path: plots/
+      hash: md5
+      md5: a3162fdee5ebc0270d05f21ffdd9e92a.dir
+      size: 540174
+      nfiles: 23

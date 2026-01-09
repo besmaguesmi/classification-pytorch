@@ -1,3 +1,22 @@
+<<<<<<< HEAD
 # Add patterns of files dvc should ignore, which could improve
 # the performance. Learn more at
 # https://dvc.org/doc/user-guide/dvcignore
+=======
+# .dvcignore
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+logs/
+.ipynb_checkpoints/
+>>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705

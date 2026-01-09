@@ -294,6 +294,17 @@ def main(args):
 
         # Create the dataset for testing
         testset = Dataset(root_dir=args.data_path, transform=transform, mode=args.mode)
+        
+        # Check if test dataset is empty
+        if len(testset) == 0:
+            logging.error(f"No test samples found in {args.data_path}")
+            logging.error("Please check:")
+            logging.error("1. The data path is correct")
+            logging.error("2. DVC data has been pulled: dvc pull")
+            logging.error("3. The data directory structure has subdirectories for each class")
+            return
+        
+        logging.info(f"Found {len(testset)} test samples in {args.data_path}")
         test_loader = DataLoader(dataset=testset, batch_size=1, shuffle=False)
 
         # Load model checkpoint

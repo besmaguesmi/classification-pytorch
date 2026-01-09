@@ -52,6 +52,8 @@ jobs:
         run: |
           dvc pull -v
 
+
+          
       # 7. Run Tests
       - name: Run model tests
         run: |

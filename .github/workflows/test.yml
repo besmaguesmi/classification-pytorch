@@ -52,7 +52,7 @@ jobs:
 
       - name: DVC Pull Data
         run: |
-          dvc pull -v --relink
+          dvc pull -v --force
 
       - name: Run model tests
         run: |

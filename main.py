@@ -66,7 +66,6 @@ def save_cv_metrics(fold_histories, plots_dir):
     logging.info(f"Cross-validation metrics saved to: {metrics_path}")
     return metrics_path
 
-
 def test_with_mlflow(model, test_loader, plots_dir, backbone, freeze_backbone, class_names, device, model_path,
                      use_mlflow=True):
     """Test function with optional MLflow logging"""
@@ -85,6 +84,10 @@ def test_with_mlflow(model, test_loader, plots_dir, backbone, freeze_backbone, c
     setup_mlflow(use_mlflow)
 
     run_name = f"test_{backbone}_freeze_{freeze_backbone}_{datetime.now().strftime('%H%M%S')}"
+
+    # ✅ End any previous run to avoid "already active run" error
+    if mlflow.active_run() is not None:
+        mlflow.end_run()
 
     with mlflow.start_run(run_name=run_name) as run:
         # Log test parameters
@@ -109,7 +112,6 @@ def test_with_mlflow(model, test_loader, plots_dir, backbone, freeze_backbone, c
 
         # Log test results to MLflow
         if test_results and isinstance(test_results, dict):
-            # Extract main metrics
             main_metrics = {
                 "test_accuracy": test_results.get('accuracy', 0) * 100,
                 "test_loss": test_results.get('test_loss', 0),

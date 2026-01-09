@@ -1,14 +1,6 @@
 [core]
     remote = gdrive_remote
-<<<<<<< HEAD
-['remote "gdrive_remote"']
-    url = gdrive://1ckYhaJMG5VGWdQVTQKX5mS81q40XKTf8
-=======
-['remote "myremote"']
-    url = gdrive://0ADxho6bRxfiJUk9PVA
-    gdrive_use_service_account = true
 ['remote "gdrive_remote"']
     url = gdrive://1r3UU3LjsqjEpAubsCHfeMajgKoaOGbec
     gdrive_use_service_account = true
     gdrive_acknowledge_abuse = true
->>>>>>> 3258f25451ed0964ff8f162f1c57a4bd756d6705

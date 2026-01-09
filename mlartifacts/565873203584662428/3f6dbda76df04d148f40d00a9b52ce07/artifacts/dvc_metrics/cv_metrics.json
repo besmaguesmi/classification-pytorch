@@ -1,0 +1,39 @@
+{
+  "cross_validation": {
+    "num_folds": 5,
+    "avg_best_val_loss": 0.7038013348976772,
+    "avg_best_val_accuracy": 60.067390698969646,
+    "fold_details": [
+      {
+        "fold": 1,
+        "best_val_loss": 0.6897943814595541,
+        "best_val_accuracy": 55.26315789473684,
+        "final_epoch": 2
+      },
+      {
+        "fold": 2,
+        "best_val_loss": 0.8447153170903524,
+        "best_val_accuracy": 56.31578947368421,
+        "final_epoch": 2
+      },
+      {
+        "fold": 3,
+        "best_val_loss": 0.6111122866471609,
+        "best_val_accuracy": 66.3157894736842,
+        "final_epoch": 2
+      },
+      {
+        "fold": 4,
+        "best_val_loss": 0.7473553816477457,
+        "best_val_accuracy": 58.421052631578945,
+        "final_epoch": 2
+      },
+      {
+        "fold": 5,
+        "best_val_loss": 0.6260293076435725,
+        "best_val_accuracy": 64.02116402116403,
+        "final_epoch": 2
+      }
+    ]
+  }
+}

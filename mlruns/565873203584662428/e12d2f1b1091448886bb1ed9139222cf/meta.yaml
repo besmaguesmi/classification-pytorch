@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/565873203584662428/e12d2f1b1091448886bb1ed9139222cf/artifacts
+end_time: 1765567845301
+entry_point_name: ''
+experiment_id: '565873203584662428'
+lifecycle_stage: active
+run_id: e12d2f1b1091448886bb1ed9139222cf
+run_name: resnet18_freeze_True_fold_2_202844
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765567724303
+status: 3
+tags: []
+user_id: user

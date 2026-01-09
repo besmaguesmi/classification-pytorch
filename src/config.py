@@ -25,9 +25,9 @@ class Config:
         return {
             'train': {
                 'batch_size': 16,
-                'max_epochs': 2,
+                'max_epochs': 10,
                 'learning_rate': 0.00001,
-                'freeze_backbone': True,
+                'freeze_backbone': False,
                 'patience': 10,
                 'k_folds': 5
             },

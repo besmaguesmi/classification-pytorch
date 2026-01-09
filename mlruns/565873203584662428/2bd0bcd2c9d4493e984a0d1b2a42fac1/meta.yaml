@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/565873203584662428/2bd0bcd2c9d4493e984a0d1b2a42fac1/artifacts
+end_time: 1765568988720
+entry_point_name: ''
+experiment_id: '565873203584662428'
+lifecycle_stage: active
+run_id: 2bd0bcd2c9d4493e984a0d1b2a42fac1
+run_name: orderly-mouse-356
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765568368172
+status: 3
+tags: []
+user_id: user

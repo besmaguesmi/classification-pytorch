@@ -1,0 +1,78 @@
+{
+  "accuracy": 0.45714285714285713,
+  "misclassification_rate": 0.5428571428571429,
+  "test_loss": 0.7215114840439387,
+  "precision": 0.4409937888198758,
+  "recall": 0.45714285714285713,
+  "f1_score": 0.445921004060539,
+  "total_samples": 35,
+  "correct_predictions": 16,
+  "confusion_matrix": [
+    [
+      4,
+      11
+    ],
+    [
+      8,
+      12
+    ]
+  ],
+  "classification_report": {
+    "sea": {
+      "precision": 0.3333333333333333,
+      "recall": 0.26666666666666666,
+      "f1-score": 0.2962962962962963,
+      "support": 15.0
+    },
+    "forest": {
+      "precision": 0.5217391304347826,
+      "recall": 0.6,
+      "f1-score": 0.5581395348837209,
+      "support": 20.0
+    },
+    "accuracy": 0.45714285714285713,
+    "macro avg": {
+      "precision": 0.427536231884058,
+      "recall": 0.43333333333333335,
+      "f1-score": 0.4272179155900086,
+      "support": 35.0
+    },
+    "weighted avg": {
+      "precision": 0.4409937888198758,
+      "recall": 0.45714285714285713,
+      "f1-score": 0.445921004060539,
+      "support": 35.0
+    }
+  },
+  "per_class_metrics": {
+    "precision": {
+      "sea": 0.3333333333333333,
+      "forest": 0.5217391304347826
+    },
+    "recall": {
+      "sea": 0.26666666666666666,
+      "forest": 0.6
+    },
+    "f1_score": {
+      "sea": 0.2962962962962963,
+      "forest": 0.5581395348837209
+    },
+    "support": {
+      "sea": 15,
+      "forest": 20
+    }
+  },
+  "model_metadata": {
+    "backbone": "resnet18",
+    "freeze_backbone": true,
+    "num_classes": 2,
+    "class_names": [
+      "sea",
+      "forest"
+    ]
+  },
+  "plots": {
+    "confusion_matrix": "./plots/confusion_matrix_resnet18_freeze_backbone_True.png",
+    "confusion_matrix_normalized": "./plots/confusion_matrix_normalized_resnet18_freeze_backbone_True.png"
+  }
+}

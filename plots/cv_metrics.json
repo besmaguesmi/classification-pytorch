@@ -1,0 +1,21 @@
+{
+  "cross_validation": {
+    "num_folds": 2,
+    "avg_best_val_loss": 0.043221807254788774,
+    "avg_best_val_accuracy": 99.0515212080835,
+    "fold_details": [
+      {
+        "fold": 1,
+        "best_val_loss": 0.03683278202079236,
+        "best_val_accuracy": 99.15789473684211,
+        "final_epoch": 5
+      },
+      {
+        "fold": 2,
+        "best_val_loss": 0.049610832488785186,
+        "best_val_accuracy": 98.94514767932489,
+        "final_epoch": 5
+      }
+    ]
+  }
+}

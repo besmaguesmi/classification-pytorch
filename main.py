@@ -5,19 +5,19 @@ import os
 import warnings
 from datetime import datetime
 import json
-
-warnings.filterwarnings('ignore')
 import torch
 from torchvision import transforms
 from torch.utils.data import DataLoader, SubsetRandomSampler
 from sklearn.model_selection import KFold
+import mlflow
+
+# Standard project imports
 from src.datasets import Dataset
 from src.cnn import Classifier
 from src.config import config
-from train import train_classifier, setup_mlflow
-from src.test import test_classifier, test_model_with_thresholds
 from src.load_ckpts import load_checkpoint
-import mlflow
+
+warnings.filterwarnings('ignore')
 
 logging.basicConfig(
     level=logging.INFO,
@@ -69,6 +69,11 @@ def save_cv_metrics(fold_histories, plots_dir):
 
 def test_with_mlflow(model, test_loader, plots_dir, backbone, freeze_backbone, class_names, device, model_path,
                      use_mlflow=True):
+    
+    # Deferred import to prevent circular dependency
+    from src.test import test_classifier
+    from train import setup_mlflow
+
     """Test function with optional MLflow logging"""
     if not use_mlflow:
         logging.info("=" * 50)
@@ -143,6 +148,10 @@ def test_with_mlflow(model, test_loader, plots_dir, backbone, freeze_backbone, c
 
 
 def main(args):
+    # --- DEFERRED IMPORTS (Fix for Silent Failure) ---
+    # We import these here so that if train.py imports main.py, it doesn't crash at startup.
+    from train import train_classifier, setup_mlflow
+    
     # Check data availability if DVC is enabled
     if config.params['dvc']['enabled']:
         if not check_dvc_data(args.data_path):
@@ -329,6 +338,9 @@ def main(args):
 
 
 if __name__ == "__main__":
+    # --- DEBUG: Print to ensure script is starting ---
+    print("--- Script Starting ---")
+    
     parser = argparse.ArgumentParser(description="PyTorch Classification with DVC & MLflow")
     parser.add_argument("--mode", type=str, choices=["train", "test"], required=True,
                         help="Mode to run: 'train' or 'test'")
@@ -345,14 +357,20 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    # --- DEBUG: Print parsed arguments ---
+    print(f"--- Arguments Parsed: Mode={args.mode}, Data={args.data_path} ---")
+
     # Validate arguments
     if args.mode == "test" and not os.path.exists(args.model_path):
         logging.error(f"Model path does not exist: {args.model_path}")
+        print(f"ERROR: Model file not found at {args.model_path}")
         exit(1)
 
     if not os.path.exists(args.data_path) and not args.force:
         logging.error(f"Data path does not exist: {args.data_path}")
         logging.info("If using DVC, run: dvc pull")
+        print(f"ERROR: Data path not found at {args.data_path}")
         exit(1)
 
+    print("--- Executing main function ---")
     main(args)

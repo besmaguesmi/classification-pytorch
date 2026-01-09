@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/565873203584662428/9d4a75981d5843d7a972d9b111f72175/artifacts
+end_time: 1765577225353
+entry_point_name: ''
+experiment_id: '565873203584662428'
+lifecycle_stage: active
+run_id: 9d4a75981d5843d7a972d9b111f72175
+run_name: resnet18_freeze_False_fold_1_225811
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765576691091
+status: 3
+tags: []
+user_id: user

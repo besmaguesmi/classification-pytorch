@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/565873203584662428/a028865cc8844e239005a057117d3c4e/artifacts
+end_time: 1765577225739
+entry_point_name: ''
+experiment_id: '565873203584662428'
+lifecycle_stage: active
+run_id: a028865cc8844e239005a057117d3c4e
+run_name: melodic-hare-735
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765576217398
+status: 3
+tags: []
+user_id: user

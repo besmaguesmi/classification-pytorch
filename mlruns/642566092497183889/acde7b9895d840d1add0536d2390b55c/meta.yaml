@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/642566092497183889/acde7b9895d840d1add0536d2390b55c/artifacts
+end_time: 1765145396346
+entry_point_name: ''
+experiment_id: '642566092497183889'
+lifecycle_stage: active
+run_id: acde7b9895d840d1add0536d2390b55c
+run_name: carefree-midge-280
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765145062608
+status: 3
+tags: []
+user_id: Dell

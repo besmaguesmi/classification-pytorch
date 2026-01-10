@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/642566092497183889/b4166abe799f4ba1acea1ca9871bb54f/artifacts
+end_time: 1765144077942
+entry_point_name: ''
+experiment_id: '642566092497183889'
+lifecycle_stage: active
+run_id: b4166abe799f4ba1acea1ca9871bb54f
+run_name: tasteful-flea-594
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1765144077464
+status: 3
+tags: []
+user_id: Dell

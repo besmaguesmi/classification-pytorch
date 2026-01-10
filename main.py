@@ -233,7 +233,7 @@ def main(args):
             model.to(device)
 
             # Initialize optimizer with learning rate from params
-            optimizer = torch.optim.Adam(model.parameters(), lr=config.params['train']['learning_rate'])
+            optimizer = torch.optim.Adam(model.parameters(), lr=config.params['train']['learning_rate'], weight_decay=1e-05)
 
             # Log fold information
             logging.info(f'''Fold {fold + 1} Details:

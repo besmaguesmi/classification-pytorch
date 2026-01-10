@@ -1,4 +1,7 @@
 [core]
-    remote = myremote
-['remote "myremote"']
-    url = gdrive://0ADzGdrBA8vFtUk9PVA
+    remote = gdrive_remote
+    autostage = true
+['remote "gdrive_remote"']
+    url = gdrive://0AHHdOJ4HYRnxUk9PVA
+    gdrive_acknowledge_abuse = true
+    gdrive_use_service_account = true

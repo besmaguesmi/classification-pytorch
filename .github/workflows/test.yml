@@ -27,7 +27,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.10'
 
       # Install dependencies
       - name: Install dependencies
@@ -36,15 +36,17 @@ jobs:
           pip install -r requirements.txt 
 
       # DVC
-      - name: Create project4-442608-5ffc36a5828f.json
+      - name: Create and Configure Credentials
         env:
-          GDRIVE_CREDENTIALS_DATA: ${{ secrets.CREDENTIAL }}
+          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
         run: |
-          echo $GDRIVE_CREDENTIALS_DATA > project4-442608-5ffc36a5828f.json
-
-      - name: Modify DVC Remote
-        run: |
-          uv run dvc remote modify --local gdrive_remote gdrive_service_account_json_file_path project4-442608-5ffc36a5828f.json
+          printf "%s" "$GDRIVE_CREDENTIALS_DATA" > project4-442608-5ffc36a5828f.json
+          
+          ABSOLUTE_PATH=$(readlink -f project4-442608-5ffc36a5828f.json)
+          echo "Credentials saved to: $ABSOLUTE_PATH"
+          
+          uv run dvc remote modify --local gdrive_remote gdrive_use_service_account true
+          uv run dvc remote modify --local gdrive_remote gdrive_service_account_json_file_path "$ABSOLUTE_PATH"
 
       - name: DVC Pull Data
         run: |
@@ -54,4 +56,8 @@ jobs:
         run: |
           uv run python main.py --mode test \
             --data_path data/test \
-            --model_path models/cnn_resnet18_freeze_backbone_False.pth
+            --model_path models/cnn_resnet18_freeze_backbone_True_fold_4.pth
+
+
+
+

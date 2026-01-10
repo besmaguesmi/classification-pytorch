@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/642566092497183889/3052e4f58bbe4ae5b2d3b379543aaac1/artifacts
+end_time: 1764883047031
+entry_point_name: ''
+experiment_id: '642566092497183889'
+lifecycle_stage: active
+run_id: 3052e4f58bbe4ae5b2d3b379543aaac1
+run_name: fortunate-steed-153
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1764882486371
+status: 3
+tags: []
+user_id: Dell

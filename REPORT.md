@@ -1,73 +1,73 @@
-# DVC + MLflow Report (PyTorch Classification)
+# DVC + MLflow Report: Image Classification with PyTorch
 
-**Author:** Neji Abderrahim – CI2
+Created By: Neji. Abderrahim CI2
 
 ---
 
 ## 1) Context & Objective
 
-End-to-end image classification in PyTorch with MLflow experiment tracking and DVC data/model versioning.
+DVC and MLflow were used for an end to end image classification project with PyTorch.
 
 ## 2) Environment
 
-- Virtual env: `.venv`
-- Install deps:
-  ```bash
-  pip install -r requirements.txt
+Virtual Environment: .venv
 
-Quick check:
-python -c "import torch, mlflow; print(torch.__version__, mlflow.__version__)"
+To install dependences run:
 
-## 3) Data & DVC
+```bash
+pip install -r requirements.txt
+```
 
-3.1 Google Cloud Platform (GCP) Setup
-To enable DVC remote storage, a Service Account was configured on GCP.
+To check what versions of pytorch and mlflow you have run:
 
+```bash
+python -c "import torch; import mlflow; print(torch.__version__, mlflow.__version__)"
+```
+
+## 3) DVC and Data Setup
+
+3.1 Google Cloud - GCP
+To use DVC remote storage, GCP Service Accounts had to be configured.
 
 ![](screenshots/dataManagement.png)
 
-"Selection of the Google Cloud Project 'datamanagement' used to host the Service Account and manage resources."
-
+"Here is an image of how the GCP project named 'datamanagement' was chosen to hold the Service Account and manage the resources needed."
 
 ![](screenshots/serviceAccount.png)
 
-"Creation of the specific Service Account ('AbderrahimNeji') that acts as the authenticated identity for DVC operations."
-
+"Here is an image of how the specific Service Account named 'AbderrahimNeji' was created to act as the authenticated identity for DVC operations."
 
 ![](screenshots/keyGeneration.png)
 
-"Generation of the JSON private key to authenticate the local environment and CI pipelines against Google Cloud services."
+"Here is an image showing how to generate the JSON file as the private key used to authenticate both the local environment and CI/CD pipelines against GCP Services."
 
-3.2 Google Drive Configuration
-The data is stored in a Google Drive folder (gdrive_remote), managed as a Shared Drive to ensure persistence.
-
+3.2 Google Drive Setup
+The Data is stored in a google drive folder named gdrive_remote which is managed as a shared drive providing data preservation.
 
 ![](screenshots/sharedDrive.png)
 
-"Setup of the remote storage location within a Google Shared Drive to ensure data persistence and collaboration."
+"This image shows how the location of the remote storage was created on Google Shared Drive where the data can be preserved and accessed by many collaborators."
 
-Drive Structure:
-
+Structure of Drive
 
 ![](screenshots/driveStructure.png)
 
-"Verification of the remote folder structure used by DVC to store dataset versions."
-
+"This image shows the structure of the drive and how DVC will store versioned datasets."
 
 ![](screenshots/permissions.png)
-
-"Granting 'Content Manager' permissions to the Service Account email, allowing DVC to perform push and pull operations."
-
-Permissions: The folder was shared with the Service Account email to allow dvc push and dvc pull operations.
+"The previously mentioned Service Account has been given 'Content Manager' permission."
 
 3.3 DVC Commands
 
 - Pull data:
+
   ```bash
   python -m dvc pull
 
+  ```
+
 - Expected layout:
-data/
+  data/
   train/<class1|class2|…>/
   test/<class1|class2|…>/
 
@@ -75,29 +75,27 @@ data/
   ```bash
   python -m dvc add data
   python -m dvc push
-  
+
+  ```
 
 ## 4) MLflow
 
 - UI Command:
   ```bash
   mlflow ui --host 0.0.0.0 --port 5000
-
+  ```
 
 http://localhost:5000
 
 Experiment: pytorch-classification
 
-
 ![](screenshots/mlflow_experiment.png)
 
 "The MLflow User Interface displaying the 'pytorch-classification' experiment, tracking multiple runs, hyperparameters, and accuracy metrics."
 
-
 ![](screenshots/test_resnetRun.png)
 
 "Detailed view of a specific test run in MLflow, displaying key performance metrics such as test accuracy (30%), loss, and F1-score."
-
 
 Experiment Tracking: The interface below shows the tracked runs, including metrics (accuracy, loss) and parameters (folds, backbone freezing).
 
@@ -106,7 +104,8 @@ Experiment Tracking: The interface below shows the tracked runs, including metri
 - Command:
   ```bash
   python main.py --mode train --data_path data/train --use_mlflow
-  
+
+  ```
 
 Models produced:
 models/cnn_resnet18_freeze_backbone_True_fold_0..4.pth
@@ -119,14 +118,12 @@ models/cnn_resnet18_freeze_backbone_True_fold_0..4.pth
   --data_path data/test \
   --model_path models/cnn_resnet18_freeze_backbone_True_fold_3.pth \
   --use_mlflow
-
+  ```
 
 ## 7) Results & Analysis
 
-
 Best run (by best_val_accuracy):
 run_id: 408acb4f6a014991b3624747f9e48233
-
 
 ![](screenshots/bestRun.png)
 
@@ -144,7 +141,6 @@ Fold 0: 50.0
 Fold 2: 25.0
 
 Recommended model: models/cnn_resnet18_freeze_backbone_True_fold_3.pth
-
 
 ![](screenshots/parallelCoordinates.png)
 
@@ -167,7 +163,7 @@ Local artifacts: mlartifacts/1/<run_id>/artifacts/... (models, plots, histories,
   ```bash
   git add data.dvc .gitignore src/datasets.py train.py
   git commit -m "Auto-detect classes; add MLflow runs"
-
+  ```
 
 ![](screenshots/ciPipeline.png)
 

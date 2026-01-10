@@ -1,6 +1,5 @@
 # Report
 
-#### Repo Link : "https://github.com/MiiN1136/classification-pytorch"
 *Realized by : GORRAB Yasmine - CI2*
 
 *!You will find screenshots for a detailed overview at the end of each sub-section!*

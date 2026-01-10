@@ -85,6 +85,10 @@ def test_classifier(model, test_loader, plot_dir, backbone, freeze_backbone, cla
                 logging.info(f"Processed {batch_idx + 1}/{len(test_loader)} batches...")
 
     # Calculate metrics
+    if total_samples == 0:
+        logging.error("No samples found in test dataset!")
+        raise ValueError("Test dataset is empty. Please check your data path and dataset configuration.")
+    
     accuracy = correct_preds / total_samples
     misclassification_rate = 1 - accuracy
     test_loss /= len(test_loader)  # Average loss

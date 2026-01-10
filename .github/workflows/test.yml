@@ -27,13 +27,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: "3.8"
 
       # Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt 
+          pip install -r requirements.txt
 
       # DVC
       - name: Create project4-442608-5ffc36a5828f.json
@@ -48,10 +48,10 @@ jobs:
 
       - name: DVC Pull Data
         run: |
-          uv run dvc pull -v
+          uv run dvc pull -v --force
 
       - name: Run model tests
         run: |
           uv run python main.py --mode test \
             --data_path data/test \
-            --model_path models/cnn_resnet18_freeze_backbone_False.pth
+            --model_path models/cnn_resnet18_freeze_backbone_True_fold_3.pth

@@ -8,12 +8,14 @@ class Dataset(Dataset):
     def __init__(self, root_dir, transform=None, mode=None):
         """
         Args:
-            root_dir (string): Directory with two subdirectories, 'sea' and 'forest'.
+            root_dir (string): Directory with subdirectories for each class.
             transform (callable, optional): A function/transform to apply to the images.
         """
         self.root_dir = root_dir
         self.transform = transform
-        self.classes = ['sea', 'forest']
+        # Auto-detect classes from subdirectories
+        self.classes = sorted([d for d in os.listdir(root_dir) 
+                              if os.path.isdir(os.path.join(root_dir, d))])
         self.class_to_idx = {cls: i for i, cls in enumerate(self.classes)}
         self.mode = mode
         self.imgs = self._make_dataset()
